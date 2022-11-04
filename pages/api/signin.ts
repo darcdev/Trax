@@ -7,8 +7,7 @@ import prisma from "../../lib/prisma";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({ where: email });
-
+  const user = await prisma.user.findUnique({ where: { email } });
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
       {
